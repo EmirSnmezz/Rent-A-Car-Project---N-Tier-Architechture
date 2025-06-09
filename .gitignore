@@ -1,0 +1,18 @@
+.vs/
+
+*.user
+
+*.suo
+
+#bin ve obj klasörleri
+bin/
+obj/
+
+#yapı ve log dosyaları
+
+*.log
+
+
+# Assembly dosyaları
+*.dll
+*.exe
