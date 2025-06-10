@@ -11,5 +11,7 @@ namespace Entities.Concrete
         public Company Company { get; set; }
         public bool IsRented { get; set; }
         public int ModelYear { get; set; }
+        public string GearBoxOption { get; set; }
+        public int CarMileage { get; set; }
     }
 }
