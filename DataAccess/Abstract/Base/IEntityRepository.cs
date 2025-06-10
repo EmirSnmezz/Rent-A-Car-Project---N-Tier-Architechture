@@ -8,7 +8,7 @@ namespace DataAccess.Abstract.Base
         void Add(T entity);
         void Delete(T entity);
         T Update(T entity);
-        List<T> GetAll(Expression<Func<T, bool>> filter);
+        List<T> GetAll(Expression<Func<T, bool>> filter = null);
         T GetById(int id);
 
     }
