@@ -1,6 +1,9 @@
-﻿namespace DataAccess.Abstract
+﻿using DataAccess.Abstract.Base;
+using Entities.Concrete;
+
+namespace DataAccess.Abstract
 {
-    public interface ICompanyDal
+    public interface ICompanyDal : IEntityRepository<Company>
     {
     }
 }

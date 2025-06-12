@@ -1,6 +1,9 @@
-﻿namespace DataAccess.Abstract
+﻿using DataAccess.Abstract.Base;
+using Entities.Concrete;
+
+namespace DataAccess.Abstract
 {
-    public interface IBrandDal
+    public interface IBrandDal : IEntityRepository<Brand>
     {
     }
 }
