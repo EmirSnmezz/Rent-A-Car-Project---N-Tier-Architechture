@@ -1,10 +1,14 @@
 ﻿using DataAccess.Abstract;
-using DataAccess.Concrete.Base;
+using Core.DataAccess.EntityFramework;
 using Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfModelDal : EntityRepositoryBase<Model>, IModelDal
+    public class EfModelDal : EntityRepositoryBase<Model, RentalCarDbContext>, IModelDal
     {
+        public EfModelDal(DbContext context) : base(context)
+        {
+        }
     }
 }

@@ -1,6 +1,9 @@
-﻿namespace DataAccess.Abstract
+﻿using Core.DataAccess.Abstract.Base;
+using Entities.Concrete;
+
+namespace DataAccess.Abstract
 {
-    public interface IColorDal
+    public interface IColorDal : IEntityRepository<Color>
     {
     }
 }

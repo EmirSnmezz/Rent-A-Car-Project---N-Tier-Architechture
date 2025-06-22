@@ -1,5 +1,5 @@
-﻿using DataAccess.Abstract;
-using DataAccess.Concrete.Base;
+﻿using Core.DataAccess.EntityFramework;
+using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using Entities.Consts;
@@ -7,12 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrete.EfCarDal
 {
-    public class EfCarDal : EntityRepositoryBase<Car>, ICarDal
+    public class EfCarDal : EntityRepositoryBase<Car, RentalCarDbContext>, ICarDal
     {
-        public EfCarDal(DbContext context) : base(context)
-        {
+        public EfCarDal(DbContext context) : base(context) { }
 
-        }
         public List<Car> GetAllByBrand(int brandId)
         {
             List<Car> cars = null;
