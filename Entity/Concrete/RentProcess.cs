@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿
 using Entities.Abstract;
 
 namespace Entities.Concrete
