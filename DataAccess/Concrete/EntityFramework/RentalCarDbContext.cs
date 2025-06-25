@@ -5,13 +5,13 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class RentalCarDbContext : DbContext
     {
-        DbSet<Car> Cars { get; set; }
-        DbSet<Brand> Brands { get; set; }
-        DbSet<Color> Colors { get; set; }
-        DbSet<Company> Companies { get; set; }
-        DbSet<Customer> Customers { get; set; }
-        DbSet<Model> Models { get; set; }
-        DbSet<RentProcess> RentProcesses { get; set; }
+        public DbSet<Car> Cars { get; set; }
+        public DbSet<Brand> Brands { get; set; }
+        public DbSet<Color> Colors { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Model> Models { get; set; }
+        public DbSet<RentProcess> RentProcesses { get; set; }
      
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -3,6 +3,7 @@ using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using Entities.Consts;
+using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Concrete.EfCarDal
@@ -69,6 +70,35 @@ namespace DataAccess.Concrete.EfCarDal
             }
 
             return cars;
+        }
+
+        public List<CarDetailDto> GetCarDetails()
+        {
+            List<CarDetailDto> carDetail;
+
+            using(RentalCarDbContext context = new RentalCarDbContext())
+            {
+                carDetail = (from c in context.Cars
+                             join b in context.Brands
+                             on c.BrandId equals b.Id
+                             join color in context.Colors
+                             on c.ColorId equals color.Id
+                             join model in context.Models
+                             on c.ModelId equals model.Id
+
+                             select new CarDetailDto
+                             {
+                                 BrandName = b.Name,
+                                 Model = model.Name,
+                                 CarMileage = c.CarMileage,
+                                 Color = color.Name,
+                                 GearboxOption = c.GearBoxOption,
+                                 ModelYear = c.ModelYear,
+                                 Price = c.Price,
+                                 IsRented = c.IsRented
+                             }).ToList();
+            }
+            return carDetail;
         }
     }
 }

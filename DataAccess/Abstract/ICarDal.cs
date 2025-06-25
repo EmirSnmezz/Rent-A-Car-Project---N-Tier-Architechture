@@ -2,6 +2,7 @@
 using Core.DataAccess.Abstract.Base;
 using Entities.Concrete;
 using Entities.Consts;
+using Entities.DTOs;
 
 namespace DataAccess.Abstract
 {
@@ -12,5 +13,6 @@ namespace DataAccess.Abstract
         public List<Car> GetAllByColor(int ColorId);
         public List<Car> GetAllByPrice(int minPrice = default, int maxPrice = default);
         public List<Car> GetAllByGearBoxOption(GearBoxOptionEnum gearboxOption);
+        public List<CarDetailDto> GetCarDetails();
     }
 }
