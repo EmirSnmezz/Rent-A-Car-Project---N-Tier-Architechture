@@ -1,6 +1,7 @@
 ﻿using Core.Utilities.Results.DataResult;
 using Core.Utilities.Results.Result.Result;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Abstract
 {
@@ -13,6 +14,7 @@ namespace Business.Abstract
         IResult Add(Car car);
         IResult Update(Car car);
         IResult Delete(Car car);
+        IDataResult<List<CarDetailDto>> GetCarDetails();
 
     }
 }

@@ -5,6 +5,7 @@ using Core.Utilities.Results.DataResult;
 using Core.Utilities.Results.Result.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -90,6 +91,13 @@ namespace Business.Concrete
         {
             _carDal.Update(car);
             return new SuccessResult("Başarılı");
+        }
+
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
+        {
+            var result = _carDal.GetCarDetails();
+
+            return new SuccessDataResult<List<CarDetailDto>>(result);
         }
     }
 }
