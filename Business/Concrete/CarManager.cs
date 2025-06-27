@@ -1,5 +1,7 @@
-﻿using Business.Abstract;
+﻿using System.Linq.Expressions;
+using Business.Abstract;
 using Business.Constants;
+using Core.Entities;
 using Core.Utilities.Results;
 using Core.Utilities.Results.DataResult;
 using Core.Utilities.Results.Result.Result;
@@ -18,13 +20,26 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public IResult Add(Car car)
+        public IResult Add(CarAddDto carDto)
         {
-            
-            if(car.Brand.Name.Length < 2 || car.Model.Name.Length < 2)
+
+            //if(car.Brand.Name.Length < 2 || car.Model.Name.Length < 2)
+            //{
+            //    return new ErrorResult(Messages.CarNameIsValid);
+            //}
+
+            var car = new Car
             {
-                return new ErrorResult(Messages.CarNameIsValid);
-            }
+                BrandId = carDto.BrandId,
+                ModelId = carDto.ModelId,
+                ColorId = carDto.ColorId,
+                CompanyId = carDto.CompanyId,
+                IsRented = carDto.IsRented,
+                ModelYear = carDto.ModelYear,
+                GearBoxOption = carDto.GearBoxOption,
+                CarMileage = carDto.CarMileage,
+                Price = carDto.Price,
+            };
 
             _carDal.Add(car);
 
@@ -39,9 +54,16 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetAll()
         {
-            var result = _carDal.GetAll();
+            var result = _carDal.GetAll(
+            includes: new Expression<Func<Car, object>>[]
+            {
+                c => c.Brand,
+                c => c.Model,
+                c => c.Color
+            }
+            ).ToList();
 
-            if(result is null)
+            if (result is null)
             {
                 return new ErrorDataResult<List<Car>>(result);
             }
