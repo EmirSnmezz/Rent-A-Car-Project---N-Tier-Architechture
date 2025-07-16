@@ -1,6 +1,8 @@
 ﻿using System.Linq.Expressions;
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.AutoFac;
 using Core.Entities;
 using Core.Utilities.Results;
 using Core.Utilities.Results.DataResult;
@@ -20,13 +22,9 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Add(CarAddDto carDto)
         {
-
-            //if(car.Brand.Name.Length < 2 || car.Model.Name.Length < 2)
-            //{
-            //    return new ErrorResult(Messages.CarNameIsValid);
-            //}
 
             var car = new Car
             {
