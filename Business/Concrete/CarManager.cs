@@ -21,7 +21,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(CarValidator))]
-        public IResult Add(CarAddDto carDto)
+        public virtual IResult Add(CarAddDto carDto)
         {
 
             var car = new Car
