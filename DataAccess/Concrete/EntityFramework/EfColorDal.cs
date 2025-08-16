@@ -2,6 +2,7 @@
 using Core.DataAccess.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Color = Entities.Concrete.Color;
+using DataAccess.Concrete.Base;
 
 namespace DataAccess.Concrete.EntityFramework
 {

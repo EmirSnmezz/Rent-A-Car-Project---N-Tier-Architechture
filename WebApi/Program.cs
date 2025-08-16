@@ -1,23 +1,18 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Business.Abstract;
-using Business.Concrete;
 using Business.DependencyResolvers;
-using DataAccess.Abstract;
-using DataAccess.Concrete.EfCarDal;
-using DataAccess.Concrete.EntityFramework;
-using Microsoft.EntityFrameworkCore;
+using DataAccess.Concrete.Base;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Services.AddDbContext<RentalCarDbContext>(ServiceLifetime.Singleton);
 
-builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
-    containerBuilder.RegisterModule(new AutoFacBusinessModule());
+    containerBuilder.RegisterModule(new AutofacBusinessModule());
 });
 
 

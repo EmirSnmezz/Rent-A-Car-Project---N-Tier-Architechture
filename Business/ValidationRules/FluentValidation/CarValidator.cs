@@ -1,5 +1,4 @@
-﻿using Castle.Components.DictionaryAdapter;
-using Entities.Concrete;
+﻿using Entities.Concrete;
 using Entities.DTOs;
 using FluentValidation;
 
@@ -9,18 +8,11 @@ namespace Business.ValidationRules.FluentValidation
     {
         public CarValidator()
         {
-            RuleFor(c => c.BrandId).NotEmpty();
-            RuleFor(c => c.Price).NotEmpty();
-            RuleFor(c => c.Price).GreaterThan(0);
-            RuleFor(c => c.ColorId).NotNull();
-            //RuleFor(c => c.Brand.Name).Must(StartsWithA).WithMessage("Ürün Adı 'A' ile başlamalı...");
-            RuleFor(c => c.BrandId).NotEqual(1);
+            RuleFor(p => p.IsRented).Equals("true");
+            RuleFor(p => p.Price).NotEmpty().WithMessage("Fiyat bilgisi eksik olamaz");
+            RuleFor(p => p.CarMileage).NotEmpty().WithMessage("Km bilgisi eksik olamaz");
+            RuleFor(p => p.CarMileage).NotNull().WithMessage("Km bilgisi eksik olamaz");
+            RuleFor(p => p.CompanyId).NotEmpty().WithMessage("İlgili aracın firma bilgisine ulaşılamadı. Lütfen sistem yöneticiniz ile iletişime geçiniz.");
         }
-
-        private bool StartsWithA(string s)
-        {
-            return true;
-        }
-
     }
 }

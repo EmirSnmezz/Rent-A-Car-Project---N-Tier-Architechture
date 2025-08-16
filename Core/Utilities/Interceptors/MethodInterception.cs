@@ -13,25 +13,25 @@ namespace Core.Utilities.Interceptors
         public override void Intercept(IInvocation invocation)
         {
             bool isSuccess = true;
-
             OnBefore(invocation);
             try
             {
                 invocation.Proceed();
-            }
-            catch (Exception ex)
-            {
-                OnException(invocation);
+               
+            }catch(Exception ex)
+            {       
                 isSuccess = false;
-                throw new Exception(ex.Message);
+                OnException(invocation);
             }
             finally
             {
-                if(isSuccess)
+                if (isSuccess)
+                {
                     OnSuccess(invocation);
+                }
             }
             OnAfter(invocation);
+
         }
-        
     }
 }

@@ -2,6 +2,7 @@
 using Core.DataAccess.EntityFramework;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
+using DataAccess.Concrete.Base;
 
 namespace DataAccess.Concrete.EntityFramework
 {

@@ -3,7 +3,6 @@ using Core.DataAccess.Abstract.Base;
 using Entities.Abstract;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Core.DataAccess.EntityFramework;
 

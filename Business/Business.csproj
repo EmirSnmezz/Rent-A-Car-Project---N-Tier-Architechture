@@ -8,12 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="DependencyResolvers\AutoFac\**" />
-    <EmbeddedResource Remove="DependencyResolvers\AutoFac\**" />
-    <None Remove="DependencyResolvers\AutoFac\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Autofac" Version="8.3.0" />
     <PackageReference Include="Autofac.Extras.DynamicProxy" Version="7.1.0" />
     <PackageReference Include="FluentValidation" Version="12.0.0" />
