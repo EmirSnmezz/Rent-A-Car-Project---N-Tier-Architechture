@@ -14,6 +14,7 @@
         public static string ErrorOfCarAdded = "Araç ekleme işlemi sırasında bir hata oluştu";
         public static string ErrorOfCarDeleted = "Araç silme işlemi sırasında bir hata oluştu";
         public static string ErrorOfCarUpdated = "Araç güncelleme işlemi sırasında bir hata oluştu";
+        public static string ErrorOfCarAddedByBrandCount = "Bir markadan en fazla 10 adet araç ekleyebilirsiniz.";
         #endregion
 
         //public static string 

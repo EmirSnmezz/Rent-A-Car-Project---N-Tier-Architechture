@@ -1,8 +1,10 @@
 ﻿using System.Linq.Expressions;
+using System.Reflection;
 using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects;
+using Core.Utilities.Business;
 using Core.Utilities.Results.DataResult;
 using Core.Utilities.Results.Result.Result;
 using DataAccess.Abstract;
@@ -11,6 +13,7 @@ using Entities.DTOs;
 
 namespace Business.Concrete
 {
+    // İş kurallarını tek tek method içerisine yazarsan kod spagetti olur. 
     public class CarManager : ICarService
     {
         ICarDal _carDal;
@@ -21,8 +24,12 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(CarValidator))]
-        public virtual IResult Add(CarAddDto carDto)
+        public IResult Add(CarAddDto carDto)
         {
+            IResult result = BusinessRules.Run(CheckIfCarCountOfCategoryCorrect(carDto.BrandId));
+
+            if (result != null)
+                return result;
 
             var car = new Car
             {
@@ -38,7 +45,6 @@ namespace Business.Concrete
             };
 
             _carDal.Add(car);
-
             return new SuccessResult(Messages.CarAdded);
         }
 
@@ -50,6 +56,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetAll()
         {
+
             var result = _carDal.GetAll(
             includes: new Expression<Func<Car, object>>[]
             {
@@ -81,7 +88,7 @@ namespace Business.Concrete
 
         public IDataResult<Car> GetById(int id)
         {
-            var result =  _carDal.GetById(p => p.Id == id);
+            var result = _carDal.GetById(p => p.Id == id);
 
             if (result is null)
             {
@@ -94,7 +101,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetByPrice(int minValue = 0, int maxValue = 0)
         {
-           var result = _carDal.GetAll(p => p.Price > minValue && p.Price < maxValue);
+            var result = _carDal.GetAll(p => p.Price > minValue && p.Price < maxValue);
 
             if (result is null)
             {
@@ -107,8 +114,14 @@ namespace Business.Concrete
 
         public IResult Update(Car car)
         {
+            IResult result = BusinessRules.Run(CheckIfCarCountOfCategoryCorrect(car.BrandId));
+
+            if(result != null)
+                return result;
+
             _carDal.Update(car);
-            return new SuccessResult("Başarılı");
+
+            return new SuccessResult(Messages.CarUpdated);
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()
@@ -116,6 +129,16 @@ namespace Business.Concrete
             var result = _carDal.GetCarDetails();
 
             return new SuccessDataResult<List<CarDetailDto>>(result);
+        }
+
+        private IResult CheckIfCarCountOfCategoryCorrect(int brandId)
+        {
+            var result = _carDal.GetAllByBrand(brandId).Count;
+
+            if (result >= 10)
+                return new ErrorResult(Messages.ErrorOfCarAddedByBrandCount);
+
+            return new SuccessResult();
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Business.DependencyResolvers
 
             builder.RegisterAssemblyTypes(assembly)
                 .AsImplementedInterfaces()
-                .EnableClassInterceptors(new Castle.DynamicProxy.ProxyGenerationOptions()
+                .EnableInterfaceInterceptors(new Castle.DynamicProxy.ProxyGenerationOptions()
                 {
                     Selector = new MethodInterceptionSelector()
                 }).SingleInstance();
