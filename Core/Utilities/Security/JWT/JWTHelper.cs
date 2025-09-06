@@ -1,0 +1,56 @@
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Core.Entities.Concrete;
+using Core.Utilities.Security.Encyrption;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+
+
+namespace Core.Utilities.Security.JWT
+{
+    public class JWTHelper : ITokenHelper
+    {
+        public IConfiguration Configuration { get; }
+        public TokenOptions _tokenOptions;
+        private DateTime _accessTokenExpiration;
+        public JWTHelper(IConfiguration configuration)
+        {
+            Configuration = configuration;
+            _tokenOptions = configuration.GetSection("TokenOptions").Get<TokenOptions>();
+        }
+
+        public AccessToken CreateToken(User user, List<OperationClaim> operationClaims)
+        {
+            _accessTokenExpiration = DateTime.UtcNow.AddMinutes(_tokenOptions.AccessTokenExpiration);
+            var securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);
+            var signingCredential = SigningCredentialsHelper.CreateSigningCredentials(securityKey);
+            var jwt = CreateJwtSecurityToken(_tokenOptions, user, signingCredential, operationClaims);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.WriteToken(jwt);
+
+            return new AccessToken()
+            {
+                Token = token,
+                Expiration = _accessTokenExpiration,
+            };
+        }
+        public JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, User user, SigningCredentials signingCredential, List<OperationClaim> operationClaims)
+        {
+            var jwt = new JwtSecurityToken
+                (
+                 issuer: tokenOptions.Issuer,
+                 audience: tokenOptions.Audience,
+                 expires: _accessTokenExpiration,
+                 signingCredentials: signingCredential,
+                 notBefore: DateTime.UtcNow,
+                 claims: SetClaims(user, operationClaims)
+                );
+
+            return jwt;
+        }
+
+        private IEnumerable<Claim> SetClaims(User user, List<OperationClaim> operationClaims)
+        { 
+        }
+    }
+}

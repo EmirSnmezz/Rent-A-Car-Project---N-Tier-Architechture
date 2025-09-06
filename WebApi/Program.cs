@@ -1,6 +1,7 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Business.DependencyResolvers;
+using Core.Utilities.Security.JWT;
 using DataAccess.Concrete.Base;
 
 
@@ -14,7 +15,6 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).Conf
 {
     containerBuilder.RegisterModule(new AutofacBusinessModule());
 });
-
 
 var app = builder.Build();
 
