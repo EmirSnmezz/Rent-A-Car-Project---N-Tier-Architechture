@@ -4,6 +4,7 @@ using Autofac.Extras.DynamicProxy;
 using Business.Abstract;
 using Business.Concrete;
 using Core.Utilities.Interceptors;
+using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using DataAccess.Concrete.Base;
 using DataAccess.Concrete.EfCarDal;
@@ -16,12 +17,22 @@ namespace Business.DependencyResolvers
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<CarManager>().As<ICarService>().SingleInstance();
-            builder.RegisterType<EfCarDal>().As<ICarDal>().SingleInstance();
-            builder.RegisterType<EfColorDal>().As<IColorDal>().SingleInstance();
-            builder.RegisterType<EfBrandDal>().As<IBrandDal>().SingleInstance();
-            builder.RegisterType<EfRentProcessDal>().As<IRentProcessDal>().SingleInstance();
-            builder.RegisterType<RentalCarDbContext>().As<DbContext>().SingleInstance();
+            builder.RegisterType<CarManager>().As<ICarService>();
+            builder.RegisterType<EfCarDal>().As<ICarDal>();
+
+            builder.RegisterType<EfColorDal>().As<IColorDal>();
+
+            builder.RegisterType<EfBrandDal>().As<IBrandDal>();
+
+            builder.RegisterType<EfRentProcessDal>().As<IRentProcessDal>();
+
+            builder.RegisterType<RentalCarDbContext>().As<DbContext>();
+
+            builder.RegisterType<EfUserDal>().As<IUserDal>();
+            builder.RegisterType<UserManager>().As<IUserService>();
+            builder.RegisterType<AuthManager>().As<IAuthService>();
+
+            builder.RegisterType<JWTHelper>().As<ITokenHelper>();
 
             var assembly = Assembly.GetExecutingAssembly();
 

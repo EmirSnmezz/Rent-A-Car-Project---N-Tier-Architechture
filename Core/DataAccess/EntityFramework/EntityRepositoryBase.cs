@@ -55,7 +55,7 @@ public class EntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity
         return result.ToList();
     }
 
-    public TEntity GetById(Expression<Func<TEntity, bool>> filter)
+    public TEntity Get(Expression<Func<TEntity, bool>> filter)
     {
         TEntity entity =  _context.Set<TEntity>().FirstOrDefault(filter);
 

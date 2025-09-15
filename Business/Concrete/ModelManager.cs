@@ -29,7 +29,7 @@ namespace Business.Concrete
 
         public Model GetById(int id)
         {
-            return _modelDal.GetById(p => p.Id == id);
+            return _modelDal.Get(p => p.Id == id);
         }
 
         public void Update(Model model)

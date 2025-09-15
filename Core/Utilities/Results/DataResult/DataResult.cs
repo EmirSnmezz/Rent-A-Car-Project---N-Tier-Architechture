@@ -17,5 +17,10 @@ namespace Core.Utilities.Results.DataResult
             Data = data;
         }
 
+        public DataResult(bool isSuccess, string message) : base(isSuccess, message)
+        {
+            
+        }
+
     }
 }

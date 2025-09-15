@@ -30,7 +30,7 @@ namespace Business.Concrete
 
         public Company GetById(int id)
         {
-            return _companyDal.GetById(p => p.Id == id);
+            return _companyDal.Get(p => p.Id == id);
         }
 
         public void Update(Company company)

@@ -15,6 +15,14 @@
         public static string ErrorOfCarDeleted = "Araç silme işlemi sırasında bir hata oluştu";
         public static string ErrorOfCarUpdated = "Araç güncelleme işlemi sırasında bir hata oluştu";
         public static string ErrorOfCarAddedByBrandCount = "Bir markadan en fazla 10 adet araç ekleyebilirsiniz.";
+        public static string AuthorizationDenied = "Yetkiniz Yok.";
+        #endregion
+
+        #region User Success Messages
+        public static string UserRegistered = "Kullanıcı Kaydı Başarıyla Oluşturuldu";
+        public static string UserLogined = "Oturum açma işlemi başarılı. Anasayfaya yönlendiriliyorsunuz...";
+        public static string UserNotFound = "Kullanıcı bulunamadı...";
+        public static string PasswordError = "Kullanıcı adı veya şifre yanlış";
         #endregion
 
         //public static string 

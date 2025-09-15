@@ -88,7 +88,7 @@ namespace Business.Concrete
 
         public IDataResult<Car> GetById(int id)
         {
-            var result = _carDal.GetById(p => p.Id == id);
+            var result = _carDal.Get(p => p.Id == id);
 
             if (result is null)
             {

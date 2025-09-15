@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Entities;
 
 namespace Entities.DTOs
 {
-    public class CarAddDto
+    public class CarAddDto : IDto
     {
         public int BrandId { get; set; }
         public int ModelId { get; set; }
