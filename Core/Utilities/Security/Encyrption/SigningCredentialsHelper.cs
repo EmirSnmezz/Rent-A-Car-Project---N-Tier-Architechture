@@ -6,7 +6,7 @@ namespace Core.Utilities.Security.Encyrption
     {
         public static SigningCredentials CreateSigningCredentials(SecurityKey securityKey) // bizim için JWT'nin oluşturulabilmesi için 
         {
-            return new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512);
+            return new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
         } 
     }
 }

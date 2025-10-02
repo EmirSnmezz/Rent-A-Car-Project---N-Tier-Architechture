@@ -1,0 +1,19 @@
+ASP.NET Core, her HTTP isteði baþlatýldýðýnda pipeline içinde bir yerde HTTPContext nesnesi oluþturur. HttpContextAccessor, bu HTTPContext'i bir baðlam deðiþkenine atar. Böylece aybý logic içinde IHttpContextAccessor.HttpContextAccessor üzerinden okunabilir. Bir controller/ middleware dýþýndaki bir sýnýfran geçici olarak HttpContext bilgisine eriþmek istediðimizde örneðin bir helper service.
+
+HttpContext -> ASP.NET Core'da her Http Request için bir tane HttpContext oluþturulur. Bu nesne request boyunca yaþar ve response dönünce dispose edilir. Http context içinde bu istekte kim geldi ne istedi ne cevap verilecek sorularýnýn cevaplarý içindedir.
+
+HttpContext içinde neler var ?
+
+.Request -> gelen istek bilgileri bulunur. Bunun içinde; HttpMethod, Path, Query, RouteValues, Headers, Body, Content Type
+
+.Response -> dönecek yanýt bilgilieri; StatusCode, headers, body
+
+.User -> kimlik doðrulama sonucu oluþan ClaimsPrincipal
+
+.Connection -> Baðlantý bilgileri
+
+.Items -> Dictionary<object, object> benzeri bir key-value store. Ayný request içinde farklý katmanlar arasýnda veri taþýmak için
+
+.Session -> oturum yönetimi (eðer aktifse)
+
+.RequestServices -> 

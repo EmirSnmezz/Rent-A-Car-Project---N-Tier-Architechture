@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
 using Business.Abstract;
+using Business.BusinessAspects.AutoFac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects;
@@ -10,6 +11,7 @@ using Core.Utilities.Results.Result.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
+using Microsoft.AspNetCore.Http;
 
 namespace Business.Concrete
 {
@@ -23,7 +25,8 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        [ValidationAspect(typeof(CarValidator))]
+        //[ValidationAspect(typeof(CarValidator))]
+        //[SecuredOperation("product.add,admin")]
         public IResult Add(CarAddDto carDto)
         {
             IResult result = BusinessRules.Run(CheckIfCarCountOfCategoryCorrect(carDto.BrandId));
