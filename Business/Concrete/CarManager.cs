@@ -25,8 +25,8 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        //[ValidationAspect(typeof(CarValidator))]
-        //[SecuredOperation("product.add,admin")]
+        [ValidationAspect(typeof(CarValidator))]
+        [SecuredOperation("product.add,admin")]
         public IResult Add(CarAddDto carDto)
         {
             IResult result = BusinessRules.Run(CheckIfCarCountOfCategoryCorrect(carDto.BrandId));

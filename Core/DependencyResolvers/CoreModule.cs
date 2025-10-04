@@ -8,7 +8,7 @@ namespace Core.DependencyResolvers
     {
         public void Load(IServiceCollection services)
         {
-            //services.AddScoped<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IHttpContextAccessor, HttpContextAccessor>();
         }
     }
 }

@@ -15,9 +15,28 @@ using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
+builder.Services.AddDependencyResolvers(new ICoreModule[]
+{
+    new CoreModule()
+});
+
+builder.Services.AddDbContext<RentalCarDbContext>(ServiceLifetime.Singleton);
+
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
+    .ConfigureContainer<ContainerBuilder>(containerBuilder =>
+    {
+        containerBuilder.RegisterModule(new AutofacBusinessModule());
+    });
+
 var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder.Services.AddAuthentication(
+    options => 
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
@@ -31,55 +50,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey),
             ClockSkew = TimeSpan.Zero
         };
-
-        // EVENT HANDLER'LARI EKLEYÝN
-        options.Events = new JwtBearerEvents
-        {
-            OnMessageReceived = context =>
-            {
-                Console.WriteLine("=== TOKEN ALINIYOR ===");
-                var authHeader = context.Request.Headers["Authorization"].ToString();
-                Console.WriteLine("Authorization Header: " + authHeader);
-                return Task.CompletedTask;
-            },
-            OnAuthenticationFailed = context =>
-            {
-                Console.WriteLine("=== AUTHENTICATION BAÞARISIZ ===");
-                Console.WriteLine("Hata: " + context.Exception?.Message);
-                Console.WriteLine("Inner: " + context.Exception?.InnerException?.Message);
-                return Task.CompletedTask;
-            },
-            OnTokenValidated = context =>
-            {
-                Console.WriteLine("=== TOKEN GEÇERLÝ ===");
-                var userId = context.Principal?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                Console.WriteLine("User ID: " + userId);
-                return Task.CompletedTask;
-            },
-            OnChallenge = context =>
-            {
-                Console.WriteLine("=== CHALLENGE TETÝKLENDÝ ===");
-                Console.WriteLine("Error: " + context.Error);
-                Console.WriteLine("ErrorDescription: " + context.ErrorDescription);
-                return Task.CompletedTask;
-            }
-        };
-    });
-
-builder.Services.AddAuthorization();
-builder.Services.AddScoped<IHttpContextAccessor, HttpContextAccessor>();
-
-builder.Services.AddDependencyResolvers(new ICoreModule[]
-{
-    new CoreModule()
-});
-
-builder.Services.AddDbContext<RentalCarDbContext>(ServiceLifetime.Singleton);
-
-builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
-    .ConfigureContainer<ContainerBuilder>(containerBuilder =>
-    {
-        containerBuilder.RegisterModule(new AutofacBusinessModule());
     });
 
 var app = builder.Build();

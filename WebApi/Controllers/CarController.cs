@@ -19,7 +19,6 @@ namespace WebApi.Controllers
         [HttpGet("getall")]
         public IActionResult GetAll()
         {
-            //var result = _carService.GetCarDetails();
             var result = _carService.GetAll();
 
             if (result.IsSuccess)

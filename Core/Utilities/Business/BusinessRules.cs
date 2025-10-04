@@ -11,7 +11,7 @@ namespace Core.Utilities.Business
                 if (!logic.IsSuccess)
                     return logic;
             }
-            return null;
+            return new SuccessResult();
         }
     }
 }
