@@ -1,6 +1,4 @@
-using System.Security.Claims;
 using Autofac;
-using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using Business.DependencyResolvers;
 using Core.DependencyResolvers;
@@ -43,7 +41,7 @@ builder.Services.AddAuthentication(
         {
             ValidateIssuer = true,
             ValidateAudience = true,
-            ValidateLifetime = false,
+            ValidateLifetime = true,
             ValidIssuer = tokenOptions.Issuer,
             ValidAudience = tokenOptions.Audience,
             ValidateIssuerSigningKey = true,
