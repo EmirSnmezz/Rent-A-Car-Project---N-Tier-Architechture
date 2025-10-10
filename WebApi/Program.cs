@@ -13,7 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
-builder.Services.AddDependencyResolvers(new ICoreModule[]
+builder.Services.DependecyResolver(new ICoreModule[]
 {
     new CoreModule()
 });
