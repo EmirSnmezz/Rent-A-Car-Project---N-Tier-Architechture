@@ -1,17 +1,15 @@
 ﻿using System.Linq.Expressions;
-using System.Reflection;
 using Business.Abstract;
 using Business.BusinessAspects.AutoFac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
-using Core.Aspects;
+using Core.Aspects.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results.DataResult;
 using Core.Utilities.Results.Result.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
-using Microsoft.AspNetCore.Http;
 
 namespace Business.Concrete
 {

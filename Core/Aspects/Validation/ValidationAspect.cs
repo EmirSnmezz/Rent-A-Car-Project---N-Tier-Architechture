@@ -3,7 +3,7 @@ using Core.CrossCuttingConcerns.Validation.FluentValidation;
 using Core.Utilities.Interceptors;
 using FluentValidation;
 
-namespace Core.Aspects
+namespace Core.Aspects.Validation
 {
     public class ValidationAspect : MethodInterception
     {
