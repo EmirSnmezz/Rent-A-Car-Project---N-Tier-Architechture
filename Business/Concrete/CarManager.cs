@@ -3,6 +3,7 @@ using Business.Abstract;
 using Business.BusinessAspects.AutoFac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Caching;
 using Core.Aspects.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results.DataResult;
@@ -55,6 +56,7 @@ namespace Business.Concrete
             return new SuccessResult("Başarılı");
         }
 
+        [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
 
