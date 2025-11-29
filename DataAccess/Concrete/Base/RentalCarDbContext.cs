@@ -1,6 +1,11 @@
-﻿using Core.Entities.Concrete;
+﻿using Castle.Core.Configuration;
+using Core.Entities.Concrete;
+using Core.Utilities.IoC;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace DataAccess.Concrete.Base
 {
@@ -16,10 +21,12 @@ namespace DataAccess.Concrete.Base
         public DbSet<OperationClaim> OperationClaims { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
         public DbSet<User> Users { get; set; }
+
+        private IConfiguration _connectionString = ServiceTool.ServiceProvider.GetService<IConfiguration>();
      
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLLocalDB;Database=RentalCar;Trusted_Connection=true");
+            optionsBuilder.UseSqlServer(@_connectionString.GetConnectionString("sqlServer"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
