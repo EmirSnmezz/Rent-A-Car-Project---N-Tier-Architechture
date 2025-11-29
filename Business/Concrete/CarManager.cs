@@ -26,6 +26,7 @@ namespace Business.Concrete
 
         [ValidationAspect(typeof(CarValidator))]
         [SecuredOperation("product.add,admin")]
+        [CacheRemoveAspect("ICarSerivce.Get")]
         public IResult Add(CarAddDto carDto)
         {
             IResult result = BusinessRules.Run(CheckIfCarCountOfCategoryCorrect(carDto.BrandId));
