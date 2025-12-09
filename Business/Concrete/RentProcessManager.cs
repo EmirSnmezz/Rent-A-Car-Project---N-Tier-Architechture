@@ -29,7 +29,7 @@ namespace Business.Concrete
 
         public RentProcess GetById(int id)
         {
-            return _rentProcessDal.Get(p => p.Id == id);
+            return _rentProcessDal.Get(p => p.Id .Equals(id));
         }
 
         public void Update(RentProcess rentProcess)

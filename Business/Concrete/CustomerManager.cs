@@ -28,7 +28,7 @@ namespace Business.Concrete
 
         public Customer GetById(int id)
         {
-            return _customerDal.Get(p => p.Id == id);
+            return _customerDal.Get(p => p.Id.Equals(id));
         }
 
         public void Update(Customer customer)

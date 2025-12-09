@@ -80,7 +80,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetByBrandId(int brandId)
         {
-            var result = _carDal.GetAll(p => p.BrandId == brandId);
+            var result = _carDal.GetAll(p => p.BrandId.Equals(brandId));
 
             if (result is null)
             {
@@ -92,7 +92,7 @@ namespace Business.Concrete
 
         public IDataResult<Car> GetById(int id)
         {
-            var result = _carDal.Get(p => p.Id == id);
+            var result = _carDal.Get(p => p.Id.Equals(id));
 
             if (result is null)
             {
@@ -135,7 +135,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarDetailDto>>(result);
         }
 
-        private IResult CheckIfCarCountOfCategoryCorrect(int brandId)
+        private IResult CheckIfCarCountOfCategoryCorrect(string brandId)
         {
             var result = _carDal.GetAllByBrand(brandId).Count;
 
