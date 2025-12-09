@@ -6,9 +6,8 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Core.DataAccess.EntityFramework;
 
-public class EntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity> 
-    where TEntity : class, IEntity, new()
-    where TContext : DbContext, new()
+public class EntityRepositoryBase<TEntity> : IEntityRepository<TEntity> 
+    where TEntity : class, new()
 {
 
     public DbContext _context;

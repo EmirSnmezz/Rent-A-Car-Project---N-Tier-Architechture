@@ -3,7 +3,7 @@ using Entities.Abstract;
 
 namespace Core.DataAccess.Abstract.Base
 {
-    public interface IEntityRepository<TEntity> where TEntity : class, IEntity
+    public interface IEntityRepository<TEntity> where TEntity : class
     {
         void Add(TEntity entity);
         void Delete(TEntity entity);
