@@ -8,23 +8,39 @@ using Core.Utilities.Security.Encyrption;
 using Core.Utilities.Security.JWT;
 using DataAccess.Concrete.Base;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
-builder.Services.DependecyResolver(new ICoreModule[]
+string connectionString = builder.Configuration.GetConnectionString("sqlServer");
+
+builder.Services.AddDbContext<RentalCarDbContext>(options =>
 {
-    new CoreModule()
+    options.UseSqlServer(connectionString, b => b.MigrationsAssembly("DataAccess"));
 });
 
-builder.Services.AddDbContext<RentalCarDbContext>(ServiceLifetime.Singleton);
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
     .ConfigureContainer<ContainerBuilder>(containerBuilder =>
     {
         containerBuilder.RegisterModule(new AutofacBusinessModule());
     });
+
+builder.Services.DependecyResolver(new ICoreModule[]
+{
+    new CoreModule()
+});
 
 var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
@@ -50,6 +66,8 @@ builder.Services.AddAuthentication(
     });
 
 var app = builder.Build();
+
+app.UseCors("AllowAngular");
 
 app.UseRouting();
 app.UseAuthentication();

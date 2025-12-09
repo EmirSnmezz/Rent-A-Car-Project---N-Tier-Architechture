@@ -5,7 +5,7 @@ using DataAccess.Concrete.Base;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfUserDal : EntityRepositoryBase<User, RentalCarDbContext>, IUserDal
+    public class EfUserDal : EntityRepositoryBase<User>, IUserDal
     {
         RentalCarDbContext _context;
         public EfUserDal(RentalCarDbContext context) : base(context)

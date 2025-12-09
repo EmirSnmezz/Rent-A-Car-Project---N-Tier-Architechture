@@ -6,7 +6,7 @@ using DataAccess.Concrete.Base;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfColorDal : EntityRepositoryBase<Color, RentalCarDbContext>, IColorDal
+    public class EfColorDal : EntityRepositoryBase<Color>, IColorDal
     {
         public EfColorDal(DbContext context) : base(context)
         {

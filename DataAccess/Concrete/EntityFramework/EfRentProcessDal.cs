@@ -6,7 +6,7 @@ using DataAccess.Concrete.Base;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfRentProcessDal : EntityRepositoryBase<RentProcess, RentalCarDbContext>, IRentProcessDal
+    public class EfRentProcessDal : EntityRepositoryBase<RentProcess>, IRentProcessDal
     {
         DbContext _context;
         public EfRentProcessDal(DbContext context) : base(context) { }

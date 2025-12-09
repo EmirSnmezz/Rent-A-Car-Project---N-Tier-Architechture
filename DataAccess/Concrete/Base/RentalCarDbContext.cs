@@ -1,6 +1,7 @@
 ﻿using Castle.Core.Configuration;
 using Core.Entities.Concrete;
 using Core.Utilities.IoC;
+using Entities.Abstract;
 using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,11 +23,8 @@ namespace DataAccess.Concrete.Base
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
         public DbSet<User> Users { get; set; }
 
-        private IConfiguration _connectionString = ServiceTool.ServiceProvider.GetService<IConfiguration>();
-     
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public RentalCarDbContext(DbContextOptions<RentalCarDbContext> options) : base(options)
         {
-            optionsBuilder.UseSqlServer(@_connectionString.GetConnectionString("sqlServer"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

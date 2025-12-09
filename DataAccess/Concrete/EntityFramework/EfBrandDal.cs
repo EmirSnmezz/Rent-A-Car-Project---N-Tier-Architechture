@@ -6,7 +6,7 @@ using DataAccess.Concrete.Base;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfBrandDal : EntityRepositoryBase<Brand, RentalCarDbContext> , IBrandDal
+    public class EfBrandDal : EntityRepositoryBase<Brand> , IBrandDal
     {
         public EfBrandDal(DbContext context) : base(context)
         {
