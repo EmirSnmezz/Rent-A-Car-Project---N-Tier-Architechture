@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Results.DataResult;
+using Core.Utilities.Results.Result.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
 
@@ -12,29 +14,46 @@ namespace Business.Concrete
         {
             _modelDal = modelDal;
         }
-        public void Add(Model model)
+        public IResult Add(Model model)
         {
             _modelDal.Add(model);
+            return new SuccessResult(message:"Model ekleme işlemi başarılı");
         }
 
-        public void Delete(Model model)
+        public IResult Delete(Model model)
         {
             _modelDal.Delete(model);
+            return new SuccessResult(message: "Model ekleme silme başarılı");
         }
 
-        public List<Model> GetAll()
+        public IDataResult<List<Model>> GetAll()
         {
-            return _modelDal.GetAll();
+            var result = _modelDal.GetAll(includes: p => p.Brand);
+
+            if(result.Count != 0)
+            {
+                return new SuccessDataResult<List<Model>>(data: result, message: "Model listeleme işlemi başarılı");
+            }
+
+            return new ErrorDataResult<List<Model>>(data: null, message: "Listelenecek model bilgisine ulaşılamadı");
         }
 
-        public Model GetById(int id)
+        public IDataResult<Model> GetById(int id)
         {
-            return _modelDal.Get(p => p.Id.Equals(id));
+            var result = _modelDal.Get(p => p.Id.Equals(id));
+
+            if(result is not null)
+            {
+                return new SuccessDataResult<Model>(data: result, message: "Model bulundu");
+            }
+
+            return new ErrorDataResult<Model>(data: null, message: "Model bulunamadı");
         }
 
-        public void Update(Model model)
+        public IResult Update(Model model)
         {
             _modelDal.Update(model);
+            return new SuccessResult(message: "Model ekleme silme başarılı");
         }
     }
 }

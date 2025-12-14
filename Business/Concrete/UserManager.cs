@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Business.Abstract;
+﻿using Business.Abstract;
 using Core.Entities.Concrete;
+using Core.Utilities.Results.DataResult;
+using Core.Utilities.Results.Result.Result;
 using DataAccess.Abstract;
 
 namespace Business.Concrete
@@ -16,24 +13,46 @@ namespace Business.Concrete
         {
             _userDal = userDal;
         }
-        public void Add(User user)
+        public IResult Add(User user)
         {
             _userDal.Add(user);
+            return new SuccessResult(message: "Kullanıcı başarıyla eklendi");
         }
 
-        public User GetByEmailOrUserName(string emailOrUserName)
+        public IDataResult<User> GetByEmailOrUserName(string emailOrUserName)
         {
-            return _userDal.Get(u => u.Email == emailOrUserName);
+            var result = _userDal.Get(u => u.Email == emailOrUserName);
+
+            if(result is not null)
+            {
+                return new SuccessDataResult<User>(data: result, message: "Kullanıcı bulundu");
+            }
+
+            return new ErrorDataResult<User>(data: null, message: "Kullanıcı bulunamadı.");
         }
 
-        public List<OperationClaim> GetClaims(User user)
+        public IDataResult<List<OperationClaim>> GetClaims(User user)
         {
-            return _userDal.GetCliams(user);
+            var result = _userDal.GetCliams(user);
+
+            if (result is not null)
+            {
+                return new SuccessDataResult<List<OperationClaim>>(data: result, message: "Kullanıcı bulundu");
+            }
+
+            return new ErrorDataResult<List<OperationClaim>>(data: null, message: "Kullanıcı bulunamadı.");
         }
 
-        public User GetByEmail(string email)
+        public IDataResult<User> GetByEmail(string email)
         {
-            return _userDal.Get(u => u.Email == email);
+            var result = _userDal.Get(u => u.Email == email);
+
+            if (result is not null)
+            {
+                return new SuccessDataResult<User>(data: result, message: "Kullanıcı bulundu");
+            }
+
+            return new ErrorDataResult<User>(data: null, message: "Kullanıcı bulunamadı.");
         }
     }
 }

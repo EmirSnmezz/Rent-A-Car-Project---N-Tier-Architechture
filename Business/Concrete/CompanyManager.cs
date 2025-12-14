@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Results.DataResult;
+using Core.Utilities.Results.Result.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
 
@@ -13,29 +15,46 @@ namespace Business.Concrete
             _companyDal = companyDal;
         }
 
-        public void Add(Company company)
+        public IResult Add(Company company)
         {
             _companyDal.Add(company);
+            return new SuccessResult(message: "Şirket ekleme işlemi başarılı.");
         }
 
-        public void Delete(Company company)
+        public IResult Delete(Company company)
         {
             _companyDal.Delete(company);
+            return new SuccessResult(message: "Şirket başarıyla silindi.");
         }
 
-        public List<Company> GetAll()
+        public IDataResult<List<Company>> GetAll()
         {
-            return _companyDal.GetAll();
+            var result = _companyDal.GetAll();
+
+            if(result.Count != 0)
+            {
+                return new SuccessDataResult<List<Company>>(data: result, message: "Şirket listeleme işlemi başarılı");
+            }
+
+            return new ErrorDataResult<List<Company>>(data: null, message: "Listelenecek Şirket Bilgisi Bulunamadı.");
         }
 
-        public Company GetById(int id)
+        public IDataResult<Company> GetById(int id)
         {
-            return _companyDal.Get(p => p.Id.Equals(id));
+            var result =  _companyDal.Get(p => p.Id.Equals(id));
+
+            if(result is not null)
+            {
+                return new SuccessDataResult<Company>(data: result, message: "Şirket bilgileri başarıyla getirildi.");
+            }
+            return new ErrorDataResult<Company>(data: null, message: "Şirket bulunamadı");
         }
 
-        public void Update(Company company)
+        public IResult Update(Company company)
         {
             _companyDal.Update(company);
+            return new SuccessResult(message: "Şirket başarıyla güncellendi.");
+
         }
     }
 }

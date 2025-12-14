@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Results.DataResult;
+using Core.Utilities.Results.Result.Result;
 using DataAccess.Abstract;
 using Entities.Concrete;
 
@@ -11,29 +13,47 @@ namespace Business.Concrete
         {
             _colorDal = colorDal;
         }
-        public void Add(Color color)
+        public IResult Add(Color color)
         {
             _colorDal.Add(color);
+            return new SuccessResult(message: "Renk ekleme işlemi başarılı");
         }
 
-        public void Delete(Color color)
+        public IResult Delete(Color color)
         {
             _colorDal.Delete(color);
+            return new SuccessResult(message: "Renk silme işlemi başarılı");
         }
 
-        public List<Color> GetAll()
+        public IDataResult<List<Color>> GetAll()
         {
-            return _colorDal.GetAll();
+            var result = _colorDal.GetAll();
+
+            if(result is not null)
+            {
+                return new SuccessDataResult<List<Color>>(data: result, message: "Renk listeleme işlemi başarılı");
+            }
+
+            return new ErrorDataResult<List<Color>>(data: null, message: "Listelenecek renk bulunamadı");
         }
 
-        public Color GetById(int id)
+        public IDataResult<Color> GetById(int id)
         {
-            return _colorDal.Get(p => p.Id.Equals(id));
+            var result =  _colorDal.Get(p => p.Id.Equals(id));
+
+            if (result is not null)
+            {
+                return new SuccessDataResult<Color>(data: result, message: "Renk listeleme işlemi başarılı");
+            }
+
+            return new ErrorDataResult<Color>(data: null, message: "Listelenecek renk bulunamadı");
         }
 
-        public void Update(Color color)
+        public IResult Update(Color color)
         {
             _colorDal.Update(color);
+            return new SuccessResult(message: "Renk güncelleme işlemi başarılı");
+
         }
     }
 }
