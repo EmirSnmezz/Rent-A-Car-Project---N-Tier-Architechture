@@ -21,17 +21,14 @@ namespace Business.DependencyResolvers
             builder.RegisterType<EfCarDal>().As<ICarDal>();
 
             builder.RegisterType<EfColorDal>().As<IColorDal>();
-
             builder.RegisterType<EfBrandDal>().As<IBrandDal>();
-
+            builder.RegisterType<EfModelDal>().As<IModelDal>();
             builder.RegisterType<EfRentProcessDal>().As<IRentProcessDal>();
-
             builder.RegisterType<RentalCarDbContext>().As<DbContext>();
-
             builder.RegisterType<EfUserDal>().As<IUserDal>();
             builder.RegisterType<UserManager>().As<IUserService>();
-            builder.RegisterType<AuthManager>().As<IAuthService>();
 
+            builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JWTHelper>().As<ITokenHelper>();
 
             var assembly = Assembly.GetExecutingAssembly();
