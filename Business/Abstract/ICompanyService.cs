@@ -1,13 +1,15 @@
-﻿using Entities.Concrete;
+﻿using Core.Utilities.Results.DataResult;
+using Core.Utilities.Results.Result.Result;
+using Entities.Concrete;
 
 namespace Business.Abstract
 {
     public interface ICompanyService
     {
-        List<Company> GetAll();
-        Company GetById(int id);
-        void Add(Company company);
-        void Update(Company company);
-        void Delete(Company company);
+        IDataResult<List<Company>> GetAll();
+        IDataResult<Company> GetById(int id);
+        IResult Add(Company company);
+        IResult Update(Company company);
+        IResult Delete(Company company);
     }
 }
